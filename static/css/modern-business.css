@@ -1,0 +1,37 @@
+body {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.carousel-item {
+  height: 50vh;
+  min-height: 150px;
+  height: 150px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+.text-block {
+  position: absolute;
+  font-weight: bold;
+  font-size: 15px;
+  top: 2px;
+  right: 2px;
+  color: dark;
+  background: rgba(255, 255, 255, 0.4);
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.footer-fix {
+font-size: max(.8vw, 5px)
+}

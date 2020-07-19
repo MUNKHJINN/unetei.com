@@ -1,0 +1,94 @@
+{% extends "banner.html" %}
+
+{% block ban %}
+{% block content %}
+
+<blockquote class="blockquote text-center"><p class="h3 mb-3 mt-3"><i class="fas fa-book-open"></i> Үндсэн цэс</p></blockquote>
+{% for ct in cts %}
+    <div class="card mb-1 mt-1" data-toggle="collapse" data-target="#navbarResponsive{{ct.id}}" aria-expanded="false">
+        <button class="btn btn-lg btn-light btn-block text-left" type="button" >
+            {% autoescape off %}
+            {{ct.logo}}
+            {% endautoescape %}
+            {{ct.cat}}
+        </button>
+    </div>
+    <div class="collapse" id="navbarResponsive{{ct.id}}">
+        <ul class="list-group ml-2">
+            <li class="btn btn-light list-group-item" >
+                <a class="text-info text-decoration-none" href="/{{ct.id}}/">{{ct.cat}} бүх зар</a>
+            </li>
+            {% for sb in sbs %}
+            {% if ct.id == sb.cat_id %}
+            <li class="btn btn-light list-group-item text-left">
+                <a class="text-dark text-decoration-none" href="{{ct.id}}/{{sb.id}}">{{sb.sub}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+{% endblock %}
+
+{% block content2 %}
+<!-- Page Heading/Tags -->
+<div class="container row">
+    {% for tg in tag %}
+        <div class="card mr-1">
+            <button class="btn btn-sm btn-light btn-block text-left" type="button" >
+            {{tg.tag}}</button>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+{% for contact in page_obj %}
+{# Each "contact" is a Contact model object. #}
+    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+        <a href="{% url 'details' contact.id %}" style="text-decoration: none">
+            <div  class="card h-100">
+            <img class="card-img-top" src="{{contact.url.url}}" alt="{{contact.count}}">
+                <div class="text-block">
+                    <a><i class="fas fa-eye"></i> {{contact.count}}</a>
+                </div>
+                <a class="ml-1 card-text">{{contact.title}}</a>
+                <a class="ml-1 card-text text-grey">{{contact.price}}</a>
+            </div>
+        </a>
+    </div>
+{% endfor %}
+</div>
+    <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+        <a class="page-link text-secondary" href="?page=1">
+          <span aria-hidden="true">1</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.previous_page_number }}">
+          <span aria-hidden="true">Өмнөх << </span>
+        </a>
+      </li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+        <li class="page-item"><a class="page-link text-dark bg-light" href="#"><b>{{ i }}</b></a></li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.next_page_number }}">
+          <span aria-hidden="true"> >> Дараах</span>
+        </a>
+      </li>
+        <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.paginator.num_pages }}">
+          <span aria-hidden="true">{{ page_obj.paginator.num_pages }}</span>
+        </a>
+      </li>
+    {% endif %}
+    </ul>
+
+{% endblock %}
+{% endblock %}

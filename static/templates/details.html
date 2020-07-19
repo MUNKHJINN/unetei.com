@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<blockquote class="blockquote text-center"><p class="h3 mb-3 mt-3"><i class="fas fa-book-open"></i> Үндсэн цэс</p></blockquote>
+{% for ct in cts %}
+    <div class="card mb-1 mt-1" data-toggle="collapse" data-target="#navbarResponsive{{ct.id}}" aria-expanded="false">
+        <button class="btn btn-lg btn-light btn-block text-left" type="button" >
+            {% autoescape off %}
+            {{ct.logo}}
+            {% endautoescape %}
+            {{ct.cat}}
+        </button>
+    </div>
+    <div class="collapse" id="navbarResponsive{{ct.id}}">
+        <ul class="list-group ml-2">
+            <li class="btn btn-light list-group-item" >
+                <a class="text-info text-decoration-none" href="/{{ct.id}}/">{{ct.cat}} бүх зар</a>
+            </li>
+            {% for sb in sbs %}
+            {% if ct.id == sb.cat_id %}
+            <li class="btn btn-light list-group-item text-left">
+                <a class="text-dark text-decoration-none" href="{{ct.id}}/{{sb.id}}">{{sb.sub}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+{% endblock %}
+{% block content2 %}
+<blockquote class="blockquote"><p class="h3 mb-3 mt-3">Нүүр зураг</p></blockquote>
+    <div class="row">
+
+      <div class="col-md-4">
+        <img class="card-img-top" src="{{uds.url.url}}" alt="{{ ups.id }}">
+      </div>
+
+      <div class="col-md-3">
+        <h3 class="my-3">Гарчиг: {{uds.title}}</h3>
+        <p>Тайлбар: {{uds.description}}</p>
+        <ul>
+          <li>Нийт үзсэн: {{uds.count}}</li>
+          <li>Зар оруулсан: {{uds.date}}</li>
+
+
+        </ul>
+        <h3 class="my-3">Үнэ: {{uds.price}}₮</h3>
+        <h3 class="my-3">Утасны дугаар: {{uds.phone_number}}</h3>
+      </div>
+              <div class="col-md-3">
+        <h3 class="my-3">Төрөл:</h3>
+        <ul>
+          <li>{{uds.tag}}</li>
+
+          <li>{{uds.kat}}</li>
+          <li>...</li>
+          <li>...</li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Бусад зураг</h3>
+
+    <div class="row">
+        {% for up in ups %}
+      <div class="col-md-1 col-sm-3 mb-4">
+        <a href="#">
+          <img class="card-img-top" src="{{up.url.url}}" alt="{{up.url.url}}">
+        </a>
+      </div>
+        {% endfor %}
+    </div>
+{% endblock %}

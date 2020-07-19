@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<blockquote class="blockquote text-center"><p class="h3 mb-3 mt-3"><i class="fas fa-book-open"></i> Үндсэн цэс</p></blockquote>
+{% for ct in cts %}
+    <div class="card mb-1 mt-1" data-toggle="collapse" data-target="#navbarResponsive{{ct.id}}" aria-expanded="false">
+        <button class="btn btn-lg btn-light btn-block text-left" type="button" >
+            {% autoescape off %}
+            {{ct.logo}}
+            {% endautoescape %}
+            {{ct.cat}}
+        </button>
+    </div>
+    <div class="collapse" id="navbarResponsive{{ct.id}}">
+        <ul class="list-group ml-2">
+            <li class="btn btn-light list-group-item" >
+                <a class="text-info text-decoration-none" href="/{{ct.id}}/">{{ct.cat}} бүх зар</a>
+            </li>
+            {% for sb in sbs %}
+            {% if ct.id == sb.cat_id %}
+            <li class="btn btn-light list-group-item text-left">
+                <a class="text-dark text-decoration-none" href="{{ct.id}}/{{sb.id}}">{{sb.sub}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+{% endblock %}
+{% block content2 %}
+  <!-- Page Content -->
+    <!-- Page Heading/Breadcrumbs -->
+<blockquote class="blockquote"><p class="h3 mb-3 mt-3">Миний зарууд</p></blockquote>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'index' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active">Миний зарууд</li>
+    </ol>
+<!-- Blog Post -->
+{% for ud in page_obj %}
+{# Each "contact" is a Contact model object. #}
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <a href="{% url 'details' ud.id %}"><img class="img-fluid rounded" src="{{ud.url.url}}" alt="{{ud.title}}">
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <h2 class="card-title">{{ud.title}}</h2>
+                    <p class="card-text">{{ud.description}}</p>
+                    <p class="card-text"><i class="fas fa-eye"></i> {{ud.count}}</p>
+                    <p class="card-text text-muted">{{ud.date}}</p>
+                </div>
+                <div class="col-lg-3">
+                    <h2 class="card-title">{{ud.title}}</h2>
+                    <p class="card-text">{{ud.description}}</p>
+                </div>
+                                <div class="col-lg-3">
+                    <p class="card-title">{{ud.title}}</p>
+                    <p class="card-text">.</p>
+                    <p class="card-text">.</p>
+                    <p class="card-text">.</p>
+                    <a href="#" class="btn btn-danger">Устгах</a>
+                    <a href="#" class="btn btn-success">Засах</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+ <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+        <a class="page-link text-secondary" href="?page=1">
+          <span aria-hidden="true">1</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.previous_page_number }}">
+          <span aria-hidden="true">Өмнөх << </span>
+        </a>
+      </li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+        <li class="page-item"><a class="page-link text-dark bg-light" href="#"><b>{{ i }}</b></a></li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.next_page_number }}">
+          <span aria-hidden="true"> >> Дараах</span>
+        </a>
+      </li>
+        <li class="page-item">
+        <a class="page-link text-secondary" href="?page={{ page_obj.paginator.num_pages }}">
+          <span aria-hidden="true">{{ page_obj.paginator.num_pages }}</span>
+        </a>
+      </li>
+    {% endif %}
+    </ul>
+{% endblock %}
